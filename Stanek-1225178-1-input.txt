@@ -1,0 +1,21 @@
+;Exercise 1: Defines two boolean variables p and q, 
+;		     two functions phi1 and phi2,
+;			 and an IFF function which will be negated and checked by the sat solver
+; 			 The output is unsat therefore IFF is true.
+;            z3 treats (and (=> f1 f2) (=> f2 f1)) with (= f1 f2)
+(declare-const p Bool)
+(declare-const q Bool)
+(define-fun phi1 () Bool
+  (=> p q)
+)
+(define-fun phi2 () Bool
+  (=> (not q) (not p))
+)
+(define-fun IFF () Bool
+  (and 
+    (=> phi1 phi2)
+    (=> phi2 phi1)
+  )
+)
+(assert(not IFF))
+(check-sat)

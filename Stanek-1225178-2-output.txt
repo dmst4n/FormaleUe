@@ -1,0 +1,18 @@
+sat
+(model 
+  (define-fun y () Bool
+    false)
+  (define-fun x () Bool
+    true)
+  (define-fun z () Bool
+    true)
+)
+sat
+(model 
+  (define-fun z () Bool
+    false)
+  (define-fun y () Bool
+    true)
+  (define-fun x () Bool
+    false)
+)

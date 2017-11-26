@@ -1,0 +1,24 @@
+;Exercise 2a: Write the prpositional formula and 
+;             and assert the negative to compute
+;             the counterexample
+(declare-const x Bool)
+(declare-const y Bool) 
+(declare-const z Bool)
+(assert   
+    (not
+        (=>
+            (and 
+                (xor x y)
+                (xor y z)
+            )
+            (xor x z)
+        )
+    )
+)
+;Get first model, afterwards assert the negative 
+;to the value x to get the second model
+(check-sat)
+(get-model 0)
+(assert (= x false))
+(check-sat)
+(get-model 1)

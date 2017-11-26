@@ -1,0 +1,84 @@
+;Exercise 3a: A counter example is given by checking the
+;             negative and computing a model. The negative 
+;             is satisifiable. Therefore we have a counter
+;             example for the assertion.
+(push)
+(declare-const la (_ BitVec 3))
+(declare-const ha (_ BitVec 3))
+(declare-const ma (_ BitVec 3))
+(define-fun eq1 () Bool
+    (and 
+        (bvule la ma) 
+        (bvule ma ha)
+    )    
+)
+(define-fun eq2 () Bool 
+    (= 
+        (bvudiv 
+            (bvadd la ha) 
+            #b010
+        ) 
+        ma
+    )
+)
+(define-fun eq3 () Bool
+    (bvule la ha)
+)
+(assert (not (=> (and eq2 eq3) eq1)))
+(check-sat)
+(get-model)
+(pop)
+
+;Exercise 3b: The same as in a is done for integers.
+;             In the theory of integers, this assertion
+;             holds. There is no counter example computed.
+(push)
+(declare-const lb Int)
+(declare-const hb Int)
+(declare-const mb Int)
+(define-fun eq1b () Bool
+    (and 
+        (<= lb mb) 
+        (<= mb hb)
+    )    
+)
+(define-fun eq2b () Bool 
+    (= 
+        (div
+            (+ lb hb) 
+            2
+        ) 
+        mb
+    )
+)
+(define-fun eq3b () Bool
+    (<= lb hb)
+)
+(assert (not (=> (and eq2b eq3b) eq1b)))
+(check-sat)
+(pop)
+
+;Exercise 3c: Same as in a.
+(push)
+(declare-const la (_ BitVec 3))
+(declare-const ha (_ BitVec 3))
+(declare-const ma (_ BitVec 3))
+(define-fun eq1 () Bool
+    (and 
+        (bvule la ma) 
+        (bvule ma ha)
+    )    
+)
+(define-fun eq2 () Bool 
+    (= 
+        (bvadd la (bvudiv (bvsub ha #b001) #b010))
+        ma
+    )
+)
+(define-fun eq3 () Bool
+    (bvule la ha)
+)
+(assert (not (=> (and eq2 eq3) eq1)))
+(check-sat)
+(get-model)
+(pop)

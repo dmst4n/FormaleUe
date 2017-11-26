@@ -1,0 +1,30 @@
+;Exercise 5a: Use Ackermans reduction to transform to phi^p
+;             Show satisfiability with model to proof that 
+;             phi is not e-valid.
+(declare-sort Sort)
+(declare-const x Sort)
+(declare-const y Sort)
+(declare-const z Sort)
+(push)
+(declare-const q1 Bool)
+(declare-const q2 Bool)
+(declare-const p1 Bool)
+(declare-const p2 Bool)
+(declare-const flat Bool)
+(declare-const fc Bool)
+(assert (= fc (and (=> (= z x) (= q1 q2)) (= p1 p2))))
+(assert (= flat (=> (and (and (= y z) q1) p1) (and p2 q2))))
+;(push)
+(assert (=> fc flat))
+(check-sat)
+;Exercise 5b: This formula is now valid. 
+(pop)
+(declare-fun Q (Sort Sort) Bool)
+(declare-fun P (Sort Sort) Bool)
+(assert (and 
+            (and (= y z) (Q z x)) (P x z)
+            (forall ((x Sort) (y Sort)) (= (Q x y) (Q y x)))
+        )
+)
+(assert (not (and (P x y) (Q x y))))
+(check-sat)

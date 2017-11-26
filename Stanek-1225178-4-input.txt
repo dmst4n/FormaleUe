@@ -1,0 +1,50 @@
+;Exercise 4a: Proof that phi is not e-satisfiable
+;             By providing a counterexample. 
+(declare-sort Sort)
+(declare-const x Sort)
+(declare-const y Sort)
+(declare-const z Sort)
+(push)
+(declare-fun F (Sort) Sort)
+(declare-fun G (Sort) Sort)
+(assert (not
+    (and 
+        (= (F x) (G y))
+        (and
+            (= z (G (F y)))
+            (and
+                (= z (G (F y)))
+                (and 
+                    (not (= z (G (F x))))
+                    (= x y)
+                )
+            )
+        )
+    )     
+))
+(check-sat)
+(get-model)
+(pop)
+
+;Exercise 4b: Use Ackermans Reduction to replace uninterpreted functions and in 
+;             the end only use variables. Do not minimize the functional 
+;             consistency constraints.
+(declare-const f1 Sort)
+(declare-const f2 Sort)
+(declare-const g1 Sort)
+(declare-const g2 Sort)
+(declare-const g3 Sort)
+(declare-const fc Bool)
+(declare-const flat Bool)
+(push)
+(assert (= fc (and (and (=> (= x y) (= f1 g1)) (=> (= y f2) (= g2 f2))) (=> (= x f1) (= f1 g3)))))
+(assert (= flat (and (and (and (= x y) (= f1 g1)) (= z g2)) (not (= z g3)))))
+(assert (=> fc flat))
+(check-sat)
+(pop)
+
+;Exercise 4c: Remove redundant constraints (x == y)
+(assert (= fc (and (=> (= y f2) (= g2 f2))) (=> (= x f1) (= f1 g3))))
+(assert (= flat (and (and (and (= x y) (= f1 g1)) (= z g2)) (not (= z g3)))))
+(assert (=> fc flat))
+(check-sat)

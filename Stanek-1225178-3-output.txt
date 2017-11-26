@@ -1,0 +1,19 @@
+sat
+(model 
+  (define-fun ma () (_ BitVec 3)
+    #b000)
+  (define-fun la () (_ BitVec 3)
+    #b100)
+  (define-fun ha () (_ BitVec 3)
+    #b100)
+)
+unsat
+sat
+(model 
+  (define-fun ma () (_ BitVec 3)
+    #b011)
+  (define-fun la () (_ BitVec 3)
+    #b000)
+  (define-fun ha () (_ BitVec 3)
+    #b000)
+)
